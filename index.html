@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,maximum-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#5b5bd6">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
@@ -11,94 +11,120 @@
 <title>六级词汇 · 记忆训练</title>
 <style>
 :root{
-  --bg:#f4f4f1; --card:#ffffff; --ink:#16181d; --sub:#71767f; --line:#e6e6e2;
-  --accent:#5b5bd6; --accent-soft:#ecebfc; --good:#12a86b; --bad:#e0453f;
-  --track:#e9e9e5; --shadow:0 1px 2px rgba(16,18,22,.04),0 8px 24px rgba(16,18,22,.06);
+  --bg:#f4f4f1; --card:#ffffff; --ink:#16181d; --sub:#63686f; --line:#e6e6e2;
+  --accent:#5b5bd6; --accent-fill:#5b5bd6; --accent-soft:#ecebfc;
+  --good:#0f7a52; --good-fill:#0f7a52; --bad:#b3271f;
+  --track:#dcdcd6; --shadow:0 1px 2px rgba(16,18,22,.04),0 8px 24px rgba(16,18,22,.06);
 }
 @media (prefers-color-scheme:dark){
   :root{
     --bg:#0e1014; --card:#171a21; --ink:#eef0f4; --sub:#8b93a1; --line:#242a34;
-    --accent:#8b8bf2; --accent-soft:#1e2036; --good:#2fd18b; --bad:#ff6b63;
-    --track:#232833; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --accent:#8b8bf2; --accent-fill:#4a4ac4; --accent-soft:#1e2036;
+    --good:#2fd18b; --good-fill:#0f7a52; --bad:#ff6b63;
+    --track:#2b3242; --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
   }
+}
+@media (prefers-contrast:more){
+  :root{--sub:#4a4f57;--line:#c9c9c3;--track:#b6b6ae}
+}
+@media (prefers-color-scheme:dark) and (prefers-contrast:more){
+  :root{--sub:#b3bccb;--line:#3d4655;--track:#3b4453}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important;animation:none!important}
+  .btn:active,.iconbtn:active{transform:none!important}
+}
+@media (prefers-reduced-transparency:reduce){
+  .nav{background:var(--card);-webkit-backdrop-filter:none;backdrop-filter:none}
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;padding:0;height:100%}
 body{
   background:var(--bg); color:var(--ink);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
-  font-size:16px; line-height:1.5; overscroll-behavior:none; touch-action:manipulation;
+  font-size:1rem; line-height:1.5; overscroll-behavior:none; touch-action:manipulation;
 }
 .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,"Times New Roman",serif}
 #app{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column}
+#app:focus,.sess:focus{outline:none}
 .hdr{
   display:flex;align-items:center;gap:10px;padding:calc(env(safe-area-inset-top) + 14px) 20px 10px;
 }
-.hdr h1{font-size:17px;margin:0;font-weight:650;letter-spacing:.01em}
+.hdr h1{font-size:1.0625rem;margin:0;font-weight:650;letter-spacing:.01em}
 .hdr .sp{flex:1}
 .streak{
-  display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:600;
-  color:var(--sub);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:5px 10px;
+  display:inline-flex;align-items:center;gap:5px;font-size:0.78125rem;font-weight:600;color:var(--sub);
 }
-.streak b{color:var(--ink)}
+.streak b{color:var(--ink);font-variant-numeric:tabular-nums}
 .iconbtn{
-  width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:var(--card);
-  color:var(--sub);display:grid;place-items:center;font-size:15px;cursor:pointer;
+  width:44px;height:44px;border-radius:12px;border:1px solid var(--line);background:var(--card);
+  color:var(--sub);display:grid;place-items:center;font-size:1rem;cursor:pointer;flex:none;
 }
 .iconbtn:active{transform:scale(.94)}
 .main{flex:1;padding:6px 20px calc(env(safe-area-inset-bottom) + 84px)}
 .nav{
   position:fixed;left:0;right:0;bottom:0;z-index:30;
-  background:color-mix(in srgb,var(--card) 86%,transparent);backdrop-filter:blur(14px);
+  background:var(--card);background:color-mix(in srgb,var(--card) 88%,transparent);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
   border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom);
   display:flex;max-width:560px;margin:0 auto;
 }
 .nav button{
-  flex:1;background:none;border:0;padding:9px 0 8px;color:var(--sub);font-size:11px;font-weight:600;
+  flex:1;background:none;border:0;padding:9px 0 8px;color:var(--sub);font-size:0.6875rem;font-weight:600;
   display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;font-family:inherit;
 }
-.nav button i{font-size:19px;font-style:normal;line-height:1}
+.nav button span{line-height:1.2}
 .nav button.on{color:var(--accent)}
 .card{
   background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;
   box-shadow:var(--shadow);
 }
-.ring{
-  width:132px;height:132px;border-radius:50%;display:grid;place-items:center;position:relative;
-  background:conic-gradient(var(--accent) calc(var(--p) * 1%), var(--track) 0);
-  transition:background .4s;
+.hero{padding:10px 2px 4px}
+.hero-lab{font-size:0.75rem;font-weight:700;letter-spacing:.08em;color:var(--sub)}
+.hero-num{display:flex;align-items:baseline;gap:2px;margin-top:6px}
+.hero-num b{font-size:3.5rem;line-height:1;font-weight:600;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.hero-num span{font-size:1.125rem;font-weight:600;color:var(--sub);letter-spacing:-.01em}
+.hero-bar{height:3px;border-radius:2px;background:var(--track);margin-top:14px;overflow:hidden}
+.hero-bar i{display:block;height:100%;background:var(--accent);border-radius:2px;transition:width .4s}
+.hero-meta{margin-top:10px;font-size:0.8125rem;color:var(--sub)}
+.hero-meta b{color:var(--ink);font-variant-numeric:tabular-nums}
+.quiet{display:flex;gap:6px;justify-content:center;margin-top:12px}
+.quiet button{
+  background:none;border:0;color:var(--sub);font-size:0.875rem;font-weight:600;font-family:inherit;
+  padding:10px 12px;min-height:44px;cursor:pointer;border-radius:10px;
 }
-.ring::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--card)}
-.ring .in{position:relative;text-align:center}
-.ring .in b{display:block;font-size:30px;font-weight:700;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.ring .in span{font-size:11.5px;color:var(--sub)}
+.quiet button:active{color:var(--ink);background:var(--accent-soft)}
+.ic{width:20px;height:20px;display:block;flex:none}
+.ic.sm{width:17px;height:17px}
 .row{display:flex;gap:12px}
 .stat{flex:1;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
-.stat b{display:block;font-size:22px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.stat span{font-size:12px;color:var(--sub)}
+.stat b{display:block;font-size:1.375rem;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.stat span{font-size:0.75rem;color:var(--sub)}
 .btn{
   display:flex;align-items:center;justify-content:center;gap:8px;width:100%;
-  border:0;border-radius:14px;padding:16px;font-size:16.5px;font-weight:650;font-family:inherit;
+  border:0;border-radius:14px;padding:16px;font-size:1.03125rem;font-weight:650;font-family:inherit;
   background:var(--card);color:var(--ink);border:1px solid var(--line);cursor:pointer;
 }
 .btn:active{transform:scale(.985)}
-.btn.pri{background:var(--accent);color:#fff;border-color:transparent}
+.btn.pri{background:var(--accent-fill);color:#fff;border-color:transparent}
 .btn.pri:active{filter:brightness(.95)}
-.btn.ghost{background:transparent;border-color:var(--line);color:var(--sub);font-weight:600;font-size:14.5px;padding:12px}
+.btn.ghost{background:transparent;border-color:var(--line);color:var(--sub);font-weight:600;font-size:0.90625rem;padding:12px}
 .btn.danger{color:var(--bad);border-color:var(--line)}
 .btn:disabled{opacity:.45}
-.btn-sm{width:auto;padding:9px 14px;font-size:13.5px;border-radius:11px}
+.btn-sm{width:auto;padding:11px 16px;font-size:0.84375rem;border-radius:11px;min-height:44px}
 .btn.stack{flex-direction:column;gap:3px;padding:13px 10px;line-height:1.25}
-.btn.stack .lbl{font-size:15px;font-weight:650;letter-spacing:.01em;white-space:nowrap}
-.btn.stack .tiny{font-size:11.5px;white-space:nowrap}
-.sec{margin:22px 0 10px;font-size:12.5px;font-weight:700;color:var(--sub);letter-spacing:.06em}
-.muted{color:var(--sub);font-size:13.5px}
-.tiny{font-size:12px;color:var(--sub)}
-.chip{
-  border:1px solid var(--line);background:var(--card);color:var(--ink);
-  border-radius:999px;padding:8px 14px;font-size:14px;font-weight:600;font-family:inherit;cursor:pointer;
+.btn.stack .lbl{font-size:0.9375rem;font-weight:650;letter-spacing:.01em;white-space:nowrap}
+.btn.stack .tiny{font-size:0.71875rem;white-space:nowrap}
+.sec{margin:22px 0 10px;font-size:0.78125rem;font-weight:700;color:var(--sub);letter-spacing:.06em}
+.muted{color:var(--sub);font-size:0.84375rem}
+.tiny{font-size:0.75rem;color:var(--sub)}
+.seg{display:flex;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:3px;gap:3px}
+.seg button{
+  flex:1;border:0;background:none;color:var(--ink);font-family:inherit;font-size:0.875rem;font-weight:600;
+  padding:9px 0;min-height:44px;border-radius:11px;cursor:pointer;font-variant-numeric:tabular-nums;
 }
-.chip.on{background:var(--accent);color:#fff;border-color:transparent}
+.seg button:active{background:var(--accent-soft)}
+.seg button.on{background:var(--accent-fill);color:#fff}
 /* ---- session ---- */
 .sess{position:fixed;inset:0;z-index:40;background:var(--bg);display:flex;flex-direction:column;max-width:560px;margin:0 auto}
 .sess .top{display:flex;align-items:center;gap:12px;padding:calc(env(safe-area-inset-top) + 12px) 16px 8px}
@@ -111,61 +137,62 @@ body{
   min-height:0;overflow:auto;will-change:transform;touch-action:pan-y;
 }
 .wordcard .w{font-size:clamp(30px,9vw,40px);font-weight:600;letter-spacing:-.01em;line-height:1.2;word-break:break-word}
-.wordcard .ipa{color:var(--sub);font-size:15px;margin-top:10px;font-family:"Iowan Old Style",Georgia,serif}
-.wordcard .mean{margin-top:18px;font-size:17px;line-height:1.45;color:var(--ink)}
+.wordcard .ipa{color:var(--sub);font-size:0.9375rem;margin-top:10px;font-family:"Iowan Old Style",Georgia,serif}
+.wordcard .mean{margin-top:18px;font-size:1.0625rem;line-height:1.45;color:var(--ink)}
 .wordcard .mean div+div{margin-top:5px}
-.wordcard .pos{color:var(--sub);font-size:12px;margin-bottom:8px;letter-spacing:.08em;font-weight:700}
+.wordcard .pos{color:var(--sub);font-size:0.75rem;margin-bottom:8px;letter-spacing:.08em;font-weight:700}
 .speak{
-  margin-top:14px;border:1px solid var(--line);background:transparent;color:var(--sub);
-  border-radius:999px;padding:7px 14px;font-size:13px;font-family:inherit;cursor:pointer;
+  margin-top:14px;display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--line);background:transparent;color:var(--sub);
+  border-radius:999px;padding:11px 18px;font-size:0.8125rem;font-family:inherit;cursor:pointer;min-height:44px;
 }
 .acts{display:flex;gap:12px;margin-top:14px}
 .acts .btn{padding:17px}
 .acts .no{color:var(--bad)}
-.acts .ok{color:#fff;background:var(--good);border-color:transparent}
+.acts .ok{color:#fff;background:var(--good-fill);border-color:transparent}
 .spellbox{margin-top:16px;width:100%}
 .spellbox input{
   width:100%;padding:16px;border-radius:14px;border:1px solid var(--line);background:var(--card);color:var(--ink);
-  font-size:19px;font-family:inherit;text-align:center;outline:none;
+  font-size:1.1875rem;font-family:inherit;text-align:center;outline:none;
 }
 .spellbox input:focus{border-color:var(--accent)}
-.verdict{font-size:14px;font-weight:700;text-align:center;margin-top:10px;min-height:20px}
+.verdict{font-size:0.875rem;font-weight:700;text-align:center;margin-top:10px;min-height:20px}
 .verdict.g{color:var(--good)} .verdict.b{color:var(--bad)}
 .list{display:flex;flex-direction:column;gap:8px}
 .item{
   display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
   border-radius:14px;padding:12px 14px;
 }
-.item .k{font-weight:600;font-size:16px}
-.item .v{color:var(--sub);font-size:12.5px;margin-top:2px}
+.item .k{font-weight:600;font-size:1rem}
+.item .v{color:var(--sub);font-size:0.78125rem;margin-top:2px}
 .item .sp{flex:1;min-width:0;overflow:hidden}
 .item .v{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.badge{font-size:11px;font-weight:700;color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent);padding:3px 8px;border-radius:999px}
+.badge{font-size:0.6875rem;font-weight:700;color:var(--bad);background:color-mix(in srgb,var(--bad) 12%,transparent);padding:3px 8px;border-radius:999px}
 .chart{display:flex;align-items:flex-end;gap:5px;height:76px;padding:0 2px}
 .chart i{flex:1;background:var(--accent);border-radius:4px 4px 2px 2px;min-height:3px;opacity:.85}
 .chart i.z{background:var(--track);opacity:1;border-radius:2px}
 .chartwrap{margin-top:8px}
-.chartx{display:flex;gap:5px;margin-top:6px}
-.chartx span{flex:1;text-align:center;font-size:9.5px;color:var(--sub)}
+.chartx{display:flex;justify-content:space-between;margin-top:6px;padding:0 2px}
+.chartx span{font-size:0.6875rem;color:var(--sub);font-variant-numeric:tabular-nums}
 .banner{
-  display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--sub);
+  display:flex;align-items:center;gap:10px;font-size:0.78125rem;color:var(--sub);
   background:var(--accent-soft);border-radius:12px;padding:10px 12px;margin-top:14px;
 }
 .banner .sp{flex:1}
 .toast{
   position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom) + 96px);transform:translateX(-50%) translateY(10px);
-  background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:13.5px;font-weight:600;
+  background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:0.84375rem;font-weight:600;
   opacity:0;pointer-events:none;transition:.25s;z-index:90;white-space:nowrap;max-width:86vw;overflow:hidden;text-overflow:ellipsis;
 }
 .toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 .done{text-align:center;padding:20px 6px}
-.done .big{font-size:40px;margin-bottom:6px}
+.done .big{font-size:2.5rem;margin-bottom:6px}
 .tabs{display:flex;gap:8px;margin:14px 0 0;overflow-x:auto;padding-bottom:2px}
 </style>
 </head>
 <body>
-<div id="app"></div>
-<div class="toast" id="toast"></div>
+<div id="app" tabindex="-1"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script>
 (function(){
 'use strict';
@@ -601,12 +628,26 @@ function curWord(){ return SESS && SESS.q ? SESS.q[SESS.i] : null; }
 function entry(w){ return BY[w] || {w:w, p:'', t:['—']}; }
 
 /* ---------- 渲染 ---------- */
+var ICONS = {
+  today:'<circle cx="10" cy="10" r="6.4"/><circle cx="10" cy="10" r="1.6" fill="currentColor" stroke="none"/>',
+  wrong:'<path d="M6.6 3.8h6.8a1.3 1.3 0 0 1 1.3 1.3v11.1l-4.7-2.9-4.7 2.9V5.1a1.3 1.3 0 0 1 1.3-1.3z"/>',
+  stats:'<path d="M5.4 15.4V10.2M10 15.4V5.2M14.6 15.4V8"/>',
+  gear:'<path d="M3.6 6.6h12.8M3.6 13.4h12.8"/><circle cx="7.8" cy="6.6" r="1.9"/><circle cx="12.2" cy="13.4" r="1.9"/>',
+  close:'<path d="M6.2 6.2l7.6 7.6M13.8 6.2l-7.6 7.6"/>',
+  sound:'<path d="M4.8 8.1h2.1l3-2.5v8.8l-3-2.5H4.8z"/><path d="M12.8 7.6a3.3 3.3 0 0 1 0 4.7"/>'
+};
+function icon(name, cls){
+  return '<svg class="ic'+(cls ? ' '+cls : '')+'" viewBox="0 0 20 20" fill="none" stroke="currentColor"'
+    + ' stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">'
+    + (ICONS[name] || '') + '</svg>';
+}
 function navBar(){
-  var tabs = [['home','今日','◎'],['wrong','错词','✦'],['stats','统计','▤']];
-  var h = '<nav class="nav">';
+  var tabs = [['home','今日','today'],['wrong','错词','wrong'],['stats','统计','stats']];
+  var h = '<nav class="nav" aria-label="主导航">';
   for(var i=0;i<tabs.length;i++){
-    var on = (VIEW === tabs[i][0]) ? ' on' : '';
-    h += '<button class="'+on.trim()+'" data-act="nav" data-val="'+tabs[i][0]+'"><i>'+tabs[i][2]+'</i>'+tabs[i][1]+'</button>';
+    var on = (VIEW === tabs[i][0]);
+    h += '<button'+(on ? ' class="on" aria-current="page"' : '')+' data-act="nav" data-val="'+tabs[i][0]+'">'
+       + icon(tabs[i][2]) + '<span>'+tabs[i][1]+'</span></button>';
   }
   return h + '</nav>';
 }
@@ -615,14 +656,18 @@ function header(){
   return '<header class="hdr">'
     + '<h1>六级词汇</h1>'
     + '<div class="sp"></div>'
-    + '<div class="streak">'+(n>0?('🔥 连续 <b>'+n+'</b> 天'):'今天开个头')+'</div>'
-    + '<button class="iconbtn" data-act="nav" data-val="settings">⚙</button>'
+    + '<div class="streak">'+(n>0?('<span aria-hidden="true">🔥</span> 连续 <b>'+n+'</b> 天'):'今天开个头')+'</div>'
+    + '<button class="iconbtn" data-act="nav" data-val="settings" aria-label="设置">'+icon('gear')+'</button>'
     + '</header>';
 }
 function render(){
   var app = $('app');
+  var wasSession = app.getAttribute('data-view') === 'session';
+  app.setAttribute('data-view', VIEW);
   if(VIEW === 'session'){
     app.innerHTML = viewSession();
+    var dlg = document.querySelector('.sess');
+    if(dlg && !wasSession){ try{ dlg.focus({preventScroll:true}); }catch(e){} }
     post();
     if(SESS && SESS.mode === 'card') attachSwipe();
     return;
@@ -634,6 +679,7 @@ function render(){
   else if(VIEW === 'settings') body = viewSettings();
   app.innerHTML = header() + '<main class="main">' + body + '</main>' + navBar();
   post();
+  if(wasSession){ try{ app.focus({preventScroll:true}); }catch(e){} }
 }
 function post(){
   if(VIEW !== 'session' || !SESS) return;
@@ -653,42 +699,34 @@ function viewHome(){
   var total = trackedCount();
   var h = '';
 
-  if(LOADING) h += '<div class="banner"><span>⏳</span><span class="sp">正在加载完整词库…</span></div>';
-  else if(LOADERR) h += '<div class="banner"><span>⚠︎</span><span class="sp">'+esc(LOADERR)+'</span><button class="btn btn-sm ghost" data-act="reload">重试</button></div>';
-  else if(DICTSRC === 'seed') h += '<div class="banner"><span>◦</span><span class="sp">当前是内置精简词库（'+DICT.length+' 词）</span><button class="btn btn-sm ghost" data-act="reload">加载完整词库</button></div>';
+  if(LOADING) h += '<div class="banner" role="status" aria-live="polite"><span aria-hidden="true">⏳</span><span class="sp">正在加载完整词库…</span></div>';
+  else if(LOADERR) h += '<div class="banner"><span aria-hidden="true">⚠︎</span><span class="sp">'+esc(LOADERR)+'</span><button class="btn btn-sm ghost" data-act="reload">重试</button></div>';
+  else if(DICTSRC === 'seed') h += '<div class="banner"><span aria-hidden="true">◦</span><span class="sp">当前是内置精简词库（'+DICT.length+' 词）</span><button class="btn btn-sm ghost" data-act="reload">加载完整词库</button></div>';
 
-  h += '<div style="display:flex;align-items:center;gap:20px;margin:16px 0 6px">'
-    + '<div class="ring" style="--p:'+p+'"><div class="in"><b>'+nt+'/'+tgt+'</b><span>今日新词</span></div></div>'
-    + '<div style="flex:1">'
-      + '<div class="muted" style="margin-bottom:10px">待复习 <b style="color:var(--ink);font-size:20px">'+due+'</b> 词</div>'
-      + '<div class="muted">词库共 <b style="color:var(--ink)">'+DICT.length+'</b> 词 · 已学 '+total+'</div>'
-      + '<div class="muted" style="margin-top:6px">今日目标 '+tgt+' 词 · <span data-act="nav" data-val="settings" style="color:var(--accent);font-weight:600;cursor:pointer">调整</span></div>'
-    + '</div>'
-  + '</div>';
+  h += '<div class="hero">'
+    +   '<div class="hero-lab">今日新词</div>'
+    +   '<div class="hero-num serif"><b>'+nt+'</b><span>/'+tgt+'</span></div>'
+    +   '<div class="hero-bar"><i style="width:'+p+'%"></i></div>'
+    +   '<div class="hero-meta">待复习 <b>'+due+'</b> 词 · 词库共 '+DICT.length+' 词 · 已学 '+total+'</div>'
+    + '</div>';
 
-  h += '<div class="sec">开始</div>';
-  h += '<div style="display:flex;flex-direction:column;gap:10px">';
-  h += '<button class="btn pri" data-act="start" data-val="all">开始今日学习　'+(due+Math.max(0, tgt-nt)>0 ? ('· '+(due+Math.max(0,tgt-nt))+' 词') : '')+'</button>';
-  h += '<div class="row">'
+  h += '<div style="margin-top:22px">'
+    + '<button class="btn pri" data-act="start" data-val="all">开始今日学习　'+(due+Math.max(0, tgt-nt)>0 ? ('· '+(due+Math.max(0,tgt-nt))+' 词') : '')+'</button>'
+    + '</div>';
+  h += '<div class="row" style="margin-top:10px">'
      + '<button class="btn stack" data-act="start" data-val="new"'+(remainNew?'':' disabled')+'><span class="lbl">只学新词</span><span class="tiny">剩 '+remainNew+' 个名额</span></button>'
      + '<button class="btn stack" data-act="start" data-val="review"'+(due?'':' disabled')+'><span class="lbl">只做复习</span><span class="tiny">'+due+' 词到期</span></button>'
      + '</div>';
-  h += '<div class="row">'
-     + '<button class="btn stack" data-act="spell" data-val="read"><span class="lbl">拼写模式</span><span class="tiny">看中文写英文</span></button>'
-     + '<button class="btn stack" data-act="spell" data-val="listen"><span class="lbl">听写模式</span><span class="tiny">听发音写单词</span></button>'
+  h += '<div class="quiet">'
+     + '<button data-act="spell" data-val="read">拼写</button>'
+     + '<button data-act="spell" data-val="listen">听写</button>'
      + '</div>';
-  h += '</div>';
 
   var wrongN = 0; for(var k in S.w){ if(S.w[k].wrong>0 && S.w[k].s<=1) wrongN++; }
   if(wrongN > 0){
     h += '<div class="sec">需要再看看</div>';
     h += '<button class="btn" data-act="nav" data-val="wrong"><span>错词本里躺着 <b>'+wrongN+'</b> 个没记住的词</span><span style="margin-left:auto;color:var(--sub)">›</span></button>';
   }
-
-  h += '<div class="sec">说明</div>';
-  h += '<div class="tiny" style="line-height:1.65;color:var(--sub)">'
-     + '每张卡片 2 秒内判断「认识 / 不认识」，不认识的词当天会再次出现，之后按 1·2·4·7·15·30 天的间隔自动回锅。'
-     + '数据只存在这台设备的浏览器里，换设备不会同步。</div>';
   return h;
 }
 
@@ -697,21 +735,21 @@ function viewSession(){
   if(!SESS) return '';
   var w = curWord();
   var prog = SESS.n ? clamp(Math.round(SESS.i / SESS.n * 100), 0, 100) : 0;
-  var h = '<div class="sess">'
+  var h = '<div class="sess" role="dialog" aria-modal="true" aria-label="'+(SESS.mode==='spell' ? (SESS.dictation?'听写练习':'拼写练习') : '记忆训练')+'" tabindex="-1">'
     + '<div class="top">'
-    +   '<button class="iconbtn" data-act="quit">✕</button>'
-    +   '<div style="flex:1;text-align:center;font-size:13px;color:var(--sub);font-weight:600">'
+    +   '<button class="iconbtn" data-act="quit" aria-label="结束本次练习">'+icon('close')+'</button>'
+    +   '<div style="flex:1;text-align:center;font-size:0.8125rem;color:var(--sub);font-weight:600">'
     +     (SESS.mode==='spell' ? (SESS.dictation?'听写':'拼写') : '记忆') + '　' + Math.min(SESS.i+1, SESS.n) + ' / ' + SESS.n
     +   '</div>'
-    +   '<div class="tiny" style="width:34px;text-align:right">✓'+SESS.ok+'</div>'
+    +   '<div class="tiny" style="width:44px;text-align:right" aria-label="已认识 '+SESS.ok+' 个"><span aria-hidden="true">✓'+SESS.ok+'</span></div>'
     + '</div>'
     + '<div class="pbar"><i style="width:'+prog+'%"></i></div>'
     + '<div class="body">';
 
   if(!w){
     h += '<div class="wordcard"><div class="done">'
-      + '<div class="big">🎉</div>'
-      + '<div style="font-size:19px;font-weight:700;margin-bottom:6px">这一组完成了</div>'
+      + '<div class="big" aria-hidden="true">🎉</div>'
+      + '<div style="font-size:1.1875rem;font-weight:700;margin-bottom:6px">这一组完成了</div>'
       + '<div class="muted">共 '+SESS.n+' 张 · 认识 '+SESS.ok+' · 没记住 '+SESS.bad+'</div>'
       + '<div style="margin-top:22px;display:flex;gap:10px">'
       +   '<button class="btn" data-act="home">回到首页</button>'
@@ -736,12 +774,12 @@ function viewSession(){
     h += '<div class="spellbox">'
       + '<input id="spin" type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"'
       + ' placeholder="输入英文单词" value="'+esc(SESS.typed)+'"'+(SESS.reveal?' disabled':'')+'>'
-      + '<div class="verdict'+(SESS.reveal?(SESS.correct?' g':' b'):'')+'">'
+      + '<div class="verdict'+(SESS.reveal?(SESS.correct?' g':' b'):'')+'" role="status" aria-live="polite">'
       + (SESS.reveal ? (SESS.correct ? '✓ 正确' : '✗ 正确答案：'+esc(w)) : '')
       + '</div>'
       + '</div>';
     h += '<div style="margin-top:14px;display:flex;gap:10px;width:100%">'
-      + '<button class="btn" data-act="speak" data-val="'+esc(w)+'">🔊 发音</button>';
+      + '<button class="btn" data-act="speak" data-val="'+esc(w)+'" aria-label="朗读 '+esc(w)+'">'+icon('sound','sm')+' 发音</button>';
     if(SESS.reveal){
       h += '<button class="btn pri" data-act="spellNext">继续</button>';
     }else{
@@ -762,11 +800,11 @@ function viewSession(){
   }else{
     h += '<div class="tiny" style="margin-top:16px">想不起来就点「不认识」</div>';
   }
-  h += '<button class="speak" data-act="speak" data-val="'+esc(w)+'">🔊 听发音</button>';
+  h += '<button class="speak" data-act="speak" data-val="'+esc(w)+'" aria-label="朗读 '+esc(w)+'">'+icon('sound','sm')+' 听发音</button>';
   h += '</div>';
 
   if(SESS.shown){
-    h += '<div class="acts"><button class="btn pri" data-act="cardNext">记住了，下一个</button></div>';
+    h += '<div class="acts"><button class="btn pri" data-act="cardNext">继续下一张</button></div>';
   }else{
     h += '<div class="acts">'
       + '<button class="btn no" data-act="no">不认识</button>'
@@ -784,7 +822,7 @@ function viewWrong(){
   list.sort(function(a,b){ return S.w[b].wrong - S.w[a].wrong; });
   var h = '<div class="sec" style="margin-top:4px">错词本 · '+list.length+' 词</div>';
   if(!list.length){
-    h += '<div class="card" style="text-align:center;padding:34px 18px"><div style="font-size:26px">🌿</div>'
+    h += '<div class="card" style="text-align:center;padding:34px 18px"><div style="font-size:1.625rem" aria-hidden="true">🌿</div>'
       + '<div style="margin-top:8px;font-weight:600">干干净净，没有顽固词</div>'
       + '<div class="tiny" style="margin-top:6px">答错过的词会自动收进这里，直到你连续记对两次</div></div>';
     return h;
@@ -796,7 +834,7 @@ function viewWrong(){
     h += '<div class="item">'
       + '<div class="sp"><div class="k serif">'+esc(w)+'</div><div class="v">'+esc(e.t.join('；'))+'</div></div>'
       + '<span class="badge">错 '+S.w[w].wrong+'</span>'
-      + '<button class="iconbtn" data-act="speak" data-val="'+esc(w)+'">🔊</button>'
+      + '<button class="iconbtn" data-act="speak" data-val="'+esc(w)+'" aria-label="朗读 '+esc(w)+'">'+icon('sound')+'</button>'
       + '</div>';
   }
   h += '</div>';
@@ -816,7 +854,7 @@ function viewStats(){
   var acc = d.r ? Math.round(d.ok / d.r * 100) : 0;
   var h = '<div class="sec" style="margin-top:4px">掌握情况</div>';
   h += '<div class="card">'
-    + '<div style="display:flex;align-items:baseline;gap:8px"><b style="font-size:34px;letter-spacing:-.02em">'+mastered+'</b><span class="muted">/ '+total+' 词已掌握</span></div>'
+    + '<div style="display:flex;align-items:baseline;gap:8px"><b style="font-size:2.125rem;letter-spacing:-.02em">'+mastered+'</b><span class="muted">/ '+total+' 词已掌握</span></div>'
     + '<div style="height:8px;border-radius:4px;background:var(--track);margin:14px 0 10px;overflow:hidden">'
     +   '<div style="height:100%;width:'+clamp(total?Math.round(mastered/total*100):0,0,100)+'%;background:var(--good)"></div>'
     + '</div>'
@@ -831,8 +869,10 @@ function viewStats(){
   h += '<div class="card"><div class="row">'
     + '<div class="stat"><b>'+d.r+'</b><span>判断次数</span></div>'
     + '<div class="stat"><b>'+(d.nw||0)+'</b><span>新词</span></div>'
-    + '<div class="stat"><b>'+acc+'%</b><span>认识率</span></div>'
-    + '</div></div>';
+    + '<div class="stat"><b>'+(d.r >= 10 ? acc+'%' : '—')+'</b><span>认识率</span></div>'
+    + '</div>'
+    + (d.r < 10 ? '<div class="tiny" style="margin-top:10px">判断满 10 次后开始统计认识率</div>' : '')
+    + '</div>';
 
   h += '<div class="sec">最近 14 天</div>';
   var bars = '', labels = '', maxv = 1, days = [];
@@ -845,28 +885,29 @@ function viewStats(){
   for(var j=0;j<days.length;j++){
     var hp = Math.max(4, Math.round(days[j]/maxv*100));
     bars += days[j] ? '<i style="height:'+hp+'%" title="'+days[j]+'"></i>' : '<i class="z" style="height:3px"></i>';
-    var dt = new Date(dayStart() - (13-j)*DAY);
-    labels += '<span>'+(j%2===0 ? (dt.getMonth()+1)+'/'+dt.getDate() : '')+'</span>';
   }
-  h += '<div class="card"><div class="chart">'+bars+'</div><div class="chartx">'+labels+'</div></div>';
-
-  h += '<div class="sec">设置</div>';
-  h += '<button class="btn" data-act="nav" data-val="settings">每日目标 · 发音 · 重置</button>';
+  var total14 = days.reduce(function(a,b){ return a+b; }, 0);
+  [0,4,9,13].forEach(function(k){
+    var dt = new Date(dayStart() - (13-k)*DAY);
+    labels += '<span>'+(dt.getMonth()+1)+'/'+dt.getDate()+'</span>';
+  });
+  h += '<div class="card"><div class="chart" role="img" aria-label="最近 14 天每日判断次数柱状图，合计 '+total14+' 次">'+bars+'</div><div class="chartx" aria-hidden="true">'+labels+'</div></div>';
   return h;
 }
 
 /* --- 设置 --- */
 function viewSettings(){
   var h = '<div class="sec" style="margin-top:4px">每日新词目标</div>';
-  h += '<div style="display:flex;gap:8px;flex-wrap:wrap">';
+  h += '<div class="seg" role="group" aria-label="每日新词目标">';
   [10,20,30,40,50].forEach(function(n){
-    h += '<button class="chip'+(S.cfg.target===n?' on':'')+'" data-act="target" data-val="'+n+'">'+n+' 词</button>';
+    h += '<button class="'+(S.cfg.target===n?'on':'')+'" data-act="target" data-val="'+n+'"'
+      + (S.cfg.target===n ? ' aria-pressed="true"' : ' aria-pressed="false"')+'>'+n+'</button>';
   });
   h += '</div>';
   h += '<div class="tiny" style="margin-top:8px">按 4 级到 6 级的常见节奏，20 词/天 大约 4 个月过一遍。</div>';
 
   h += '<div class="sec">发音</div>';
-  h += '<button class="btn" data-act="sound"><span>自动发音提示</span><span style="margin-left:auto;color:'+(S.cfg.sound?'var(--good)':'var(--sub)')+';font-weight:700">'+(S.cfg.sound?'开':'关')+'</span></button>';
+  h += '<button class="btn" data-act="sound" aria-pressed="'+(S.cfg.sound?'true':'false')+'"><span>自动发音提示</span><span style="margin-left:auto;color:'+(S.cfg.sound?'var(--good)':'var(--sub)')+';font-weight:700">'+(S.cfg.sound?'开':'关')+'</span></button>';
 
   h += '<div class="sec">词库</div>';
   h += '<div class="card" style="padding:14px">'
@@ -874,6 +915,11 @@ function viewSettings(){
     + '<div style="margin-top:12px"><button class="btn ghost" data-act="reload">重新下载完整词库</button></div>'
     + '<div class="tiny" style="margin-top:10px">词库来源：qwerty-learner 开源 CET-6 词表，含音标与中文释义。</div>'
     + '</div>';
+
+  h += '<div class="sec">怎么复习</div>';
+  h += '<div class="card" style="padding:14px"><div class="tiny" style="line-height:1.7">'
+    + '每张卡片 2 秒内判断「认识 / 不认识」。判断为不认识的词当天会再出现一次，之后按 1·2·4·7·15·30·60·120 天的间隔自动回锅。'
+    + '</div></div>';
 
   h += '<div class="sec">数据</div>';
   h += '<div class="card" style="padding:14px">'
